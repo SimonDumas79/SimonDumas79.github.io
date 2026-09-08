@@ -238,8 +238,9 @@ body {
 .glass {
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
-  padding: 8px 44px 44px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   background: var(--glass-fill);
   border: 1px solid var(--glass-edge);
   border-radius: var(--radius);
@@ -249,10 +250,20 @@ body {
     inset 0 1px 0 var(--glass-highlight),
     0 0 0 1px rgba(255, 255, 255, 0.03),
     0 24px 60px rgba(0, 0, 0, 0.35);
+}
+.glass-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 8px 44px 44px;
   scrollbar-width: none; /* scrolls, but shows no bar */
   outline: none;
 }
-.glass::-webkit-scrollbar { display: none; }
+.glass-scroll::-webkit-scrollbar { display: none; }
+.glass-scroll[data-more] {
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 56px), transparent);
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 56px), transparent);
+}
 
 /* Sections and entries */
 .section { padding-top: 36px; }
@@ -365,7 +376,8 @@ body {
     padding-top: 8px;
     background: linear-gradient(var(--ground), rgba(19, 24, 31, 0));
   }
-  .glass { overflow: visible; padding: 8px 22px 28px; }
+  .glass { overflow: visible; display: block; }
+  .glass-scroll { overflow: visible; padding: 8px 22px 28px; }
   .entry { grid-template-columns: 1fr; gap: 6px; padding: 14px 12px; margin: 0 -12px; }
   .entries:hover .entry { opacity: 1; }
   /* the detail card sits under the clicked entry here */

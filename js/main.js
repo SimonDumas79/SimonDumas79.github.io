@@ -36,6 +36,15 @@
   }
   function onScroll() { if (!raf) raf = requestAnimationFrame(update); }
 
+  // Bottom fade on the panel shows only while it can scroll further (never on narrow screens,
+  // where the document scrolls and the panel has no overflow of its own)
+  function updateMore() {
+    const more = panel.scrollTop + panel.clientHeight < panel.scrollHeight - 2;
+    if (more) panel.setAttribute('data-more', ''); else panel.removeAttribute('data-more');
+  }
+  panel.addEventListener('scroll', updateMore, { passive: true });
+  new ResizeObserver(updateMore).observe(panel);
+
   function bind() {
     panel.removeEventListener('scroll', onScroll);
     window.removeEventListener('scroll', onScroll);
