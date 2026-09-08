@@ -246,7 +246,7 @@ body {
 /* Sections and entries */
 .section { padding-top: 36px; }
 .section + .section { padding-top: 56px; }
-.section h3 {
+.section > h3 {
   margin: 0 0 18px;
   font-size: 0.75rem;
   font-weight: 600;
