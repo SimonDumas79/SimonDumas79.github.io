@@ -248,6 +248,8 @@ body {
 .section + .section { padding-top: 56px; }
 .section > h3 {
   margin: 0 0 18px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--glass-edge);
   font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: 0.12em;
