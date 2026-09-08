@@ -58,9 +58,10 @@
     history.replaceState(null, '', '#' + t.dataset.target);
   }));
 
-  // A wheel anywhere on the page drives the panel, so scrolling over the left column still works
+  // A wheel over empty left-column space drives the panel. Over the panel or the detail card the
+  // browser scrolls whatever is under the cursor, and nothing else.
   window.addEventListener('wheel', e => {
-    if (!usePanel() || panel.contains(e.target)) return;
+    if (!usePanel() || panel.contains(e.target) || e.target.closest('.detail-wrap')) return;
     panel.scrollBy({ top: e.deltaY, left: 0 });
   }, { passive: true });
 
