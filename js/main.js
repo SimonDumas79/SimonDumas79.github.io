@@ -29,8 +29,9 @@
     const line = scrollTop() + viewH() * ACTIVE_LINE;
     let active = 0;
     sections.forEach((s, i) => { if (sectionTop(s) <= line) active = i; });
-    // at the very bottom the last section wins, even when it is short
-    if (maxScroll() > 0 && scrollTop() >= maxScroll() - 2) active = sections.length - 1;
+    // at the ends the first and last sections win, even when they are short
+    if (scrollTop() <= 2) active = 0;
+    else if (maxScroll() > 0 && scrollTop() >= maxScroll() - 2) active = sections.length - 1;
     tabs.forEach((t, i) => t.classList.toggle('is-active', i === active));
   }
   function onScroll() { if (!raf) raf = requestAnimationFrame(update); }
