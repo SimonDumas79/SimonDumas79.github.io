@@ -2,7 +2,6 @@
 // Wide screens: the card lives in the left column under the tagline. Narrow: it moves to sit right under the entry.
 (() => {
   const wrap = document.getElementById('detailWrap');
-  const detail = document.getElementById('detail');
   const title = document.getElementById('detailTitle');
   const body = document.getElementById('detailBody');
   const closeBtn = document.getElementById('detailClose');
@@ -10,6 +9,14 @@
   const social = document.querySelector('.social');
   const narrow = window.matchMedia('(max-width: 900px)');
   let current = null;
+
+  // Bottom fade shows only while the body can scroll further
+  function updateMore() {
+    const more = body.scrollTop + body.clientHeight < body.scrollHeight - 2;
+    if (more) body.setAttribute('data-more', ''); else body.removeAttribute('data-more');
+  }
+  body.addEventListener('scroll', updateMore, { passive: true });
+  new ResizeObserver(updateMore).observe(body); // fires through the open animation and on resize
 
   function place(entry) {
     if (narrow.matches && entry) entry.after(wrap);
@@ -26,7 +33,8 @@
     body.replaceChildren(tpl.content.cloneNode(true));
     place(entry);
     wrap.classList.add('open');
-    detail.scrollTop = 0;
+    body.scrollTop = 0;
+    updateMore();
   }
 
   function close() {
