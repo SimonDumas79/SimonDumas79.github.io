@@ -11,12 +11,14 @@
   const GLOW_RADIUS = 200;     // px from cursor
   const GLOW_LINE_ALPHA = 0.5; // fully lit edge
   const GLOW_BLOOM_ALPHA = 0.12;
-  const RISE = 0.10;           // seconds, time constant for lighting up
-  const DECAY = 0.55;          // seconds, time constant for fading out
+  const RISE = 0.14;           // seconds, time constant for lighting up
+  const DECAY = 0.40;          // seconds, time constant for fading out
 
   let W = 0, H = 0, dpr = 1;
   let edges = [];              // [x0, y0, x1, y1]
   let glow = new Float32Array(0);
+  const base = document.createElement('canvas'); // resting mesh, drawn once per resize
+  const bctx = base.getContext('2d');
   let mouse = null;            // {x, y} in CSS px, or null when off-page
   let raf = 0;
   let last = 0;
@@ -103,6 +105,18 @@
     glow = new Float32Array(edges.length);
   }
 
+  // Stroke every edge once into the offscreen base at the current size
+  function paintBase() {
+    base.width = canvas.width; base.height = canvas.height;
+    bctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    bctx.clearRect(0, 0, W, H);
+    bctx.lineWidth = 1;
+    bctx.strokeStyle = 'rgba(' + BLUE + ', ' + BASE_ALPHA + ')';
+    bctx.beginPath();
+    for (const e of edges) { bctx.moveTo(e[0], e[1]); bctx.lineTo(e[2], e[3]); }
+    bctx.stroke();
+  }
+
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     W = window.innerWidth; H = window.innerHeight;
@@ -110,6 +124,7 @@
     canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     build();
+    paintBase();
     schedule();
   }
 
@@ -146,14 +161,11 @@
   }
 
   function render() {
-    ctx.clearRect(0, 0, W, H);
-
-    // Base pass: every edge, faint
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = 'rgba(' + BLUE + ', ' + BASE_ALPHA + ')';
-    ctx.beginPath();
-    for (const e of edges) { ctx.moveTo(e[0], e[1]); ctx.lineTo(e[2], e[3]); }
-    ctx.stroke();
+    // Resting mesh from the cache, in device pixels
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(base, 0, 0);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     // Glow pass: bloom under-stroke first, then the line, alpha from each edge's glow level
     ctx.lineWidth = 6;
