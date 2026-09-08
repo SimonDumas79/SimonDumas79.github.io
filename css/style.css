@@ -54,8 +54,8 @@ body {
 .identity {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   padding-top: 40px;
+  min-height: 0;
 }
 .identity h1 {
   margin: 0;
@@ -78,11 +78,98 @@ body {
 
 .social {
   list-style: none;
-  margin: 0;
+  margin: auto 0 0; /* pinned to the bottom of the column */
   padding: 0;
   display: flex;
   gap: 20px;
+  flex-shrink: 0;
 }
+
+/* Detail card: height animates via the 0fr -> 1fr grid trick, so it opens without knowing its size */
+.detail-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  margin: 32px 0 28px;
+  min-height: 0;
+  flex: 0 1 auto;
+  opacity: 0;
+  transform: translateY(10px);
+  visibility: hidden;
+  transition:
+    grid-template-rows 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+    opacity 0.3s ease,
+    transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+    visibility 0s linear 0.45s;
+}
+.detail-wrap.open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transform: none;
+  visibility: visible;
+  transition-delay: 0s, 0s, 0s, 0s;
+}
+.detail {
+  min-height: 0;
+  overflow-y: auto;
+  padding: 16px 20px 20px;
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-edge);
+  border-radius: 16px;
+  backdrop-filter: blur(18px) saturate(120%);
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
+  box-shadow: inset 0 1px 0 var(--glass-highlight), 0 16px 40px rgba(0, 0, 0, 0.3);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+.detail-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.detail-head h3 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.detail-close {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--glass-edge);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+.detail-close:hover, .detail-close:focus-visible { color: var(--text); background: rgba(255, 255, 255, 0.06); }
+.detail-body p { margin: 0 0 10px; font-size: 0.95rem; color: var(--muted); }
+.detail-body p:last-child { margin-bottom: 0; }
+.detail-body img, .detail-body video {
+  display: block;
+  width: 100%;
+  border-radius: 10px;
+  margin: 12px 0;
+}
+.slot, .placeholder {
+  border: 1px dashed rgba(255, 255, 255, 0.22);
+  border-radius: 10px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.slot {
+  aspect-ratio: 16 / 9;
+  display: grid;
+  place-items: center;
+  margin: 4px 0 12px;
+}
+.detail-body p.placeholder { padding: 10px 12px; }
 .social a {
   display: inline-flex;
   color: var(--muted);
@@ -178,13 +265,24 @@ body {
   padding: 18px 20px;
   margin: 0 -20px;
   border-radius: 14px;
+  cursor: pointer;
+  outline: none;
   transition: opacity 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
 }
 .entries:hover .entry { opacity: 0.55; }
-.entries .entry:hover {
+.entries .entry:hover, .entries .entry:focus-visible, .entries:hover .entry.is-selected {
   opacity: 1;
   background: rgba(255, 255, 255, 0.04);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.entry.is-selected {
+  opacity: 1;
+  background: rgba(var(--blue-rgb), 0.08);
+  box-shadow: inset 0 0 0 1px rgba(var(--blue-rgb), 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.entries .entry.is-selected:hover, .entries:hover .entry.is-selected {
+  background: rgba(var(--blue-rgb), 0.1);
+  box-shadow: inset 0 0 0 1px rgba(var(--blue-rgb), 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 .when {
   display: block;
@@ -257,6 +355,9 @@ body {
   .glass { overflow: visible; padding: 8px 22px 28px; }
   .entry { grid-template-columns: 1fr; gap: 6px; padding: 14px 12px; margin: 0 -12px; }
   .entries:hover .entry { opacity: 1; }
+  /* the detail card sits under the clicked entry here */
+  .entries .detail-wrap { margin: 6px -12px 14px; }
+  .identity .detail-wrap { margin: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
