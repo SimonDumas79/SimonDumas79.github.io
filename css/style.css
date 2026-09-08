@@ -149,17 +149,25 @@ body {
 }
 .detail-close {
   flex-shrink: 0;
+  display: grid;
+  place-items: center;
   width: 28px;
   height: 28px;
+  padding: 0;
   border: 1px solid var(--glass-edge);
   border-radius: 50%;
   background: transparent;
   color: var(--muted);
-  font: inherit;
-  font-size: 1.1rem;
-  line-height: 1;
   cursor: pointer;
   transition: color 0.2s ease, background-color 0.2s ease;
+}
+.detail-close svg {
+  width: 11px;
+  height: 11px;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  fill: none;
 }
 .detail-close:hover, .detail-close:focus-visible { color: var(--text); background: rgba(255, 255, 255, 0.06); }
 .detail-body p { margin: 0 0 10px; font-size: 0.95rem; color: var(--muted); }
