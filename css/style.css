@@ -387,7 +387,6 @@ body {
     top: 0;
     z-index: 2;
     padding-top: 8px;
-    background: linear-gradient(var(--ground), rgba(19, 24, 31, 0));
   }
   .glass { overflow: visible; display: block; }
   .glass-scroll { overflow: visible; padding: 8px 22px 28px; }
