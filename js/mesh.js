@@ -7,7 +7,6 @@
   const JITTER = 0.45;     // fraction of a cell each point may wander
   const BASE_ALPHA = 0.09; // resting line alpha
   const GLOW_RADIUS = 260; // px from cursor
-  const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   let W = 0, H = 0, dpr = 1;
   let edges = [];          // [x0, y0, x1, y1]
@@ -154,14 +153,14 @@
 
   function schedule() { if (!raf) raf = requestAnimationFrame(draw); }
 
-  if (fine) {
-    window.addEventListener('mousemove', e => {
-      mouse = { x: e.clientX, y: e.clientY };
-      dirty = true;
-      schedule();
-    }, { passive: true });
-    document.addEventListener('mouseleave', () => { mouse = null; dirty = true; schedule(); });
-  }
+  // Always listen: touch-only devices simply never fire mousemove, and a tablet with a mouse
+  // attached can still report a coarse primary pointer, which would wrongly disable the glow.
+  window.addEventListener('mousemove', e => {
+    mouse = { x: e.clientX, y: e.clientY };
+    dirty = true;
+    schedule();
+  }, { passive: true });
+  document.addEventListener('mouseleave', () => { mouse = null; dirty = true; schedule(); });
   let rt;
   window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(resize, 120); });
   resize();

@@ -101,7 +101,7 @@ body {
 .tabs {
   display: flex;
   gap: 6px;
-  padding: 0 0 0 18px;
+  padding: 0 0 0 24px; /* clear of the panel's rounded corner */
 }
 .tab {
   position: relative;
@@ -142,7 +142,7 @@ body {
   padding: 8px 44px 44px;
   background: var(--glass-fill);
   border: 1px solid var(--glass-edge);
-  border-radius: 0 var(--radius) var(--radius) var(--radius);
+  border-radius: var(--radius);
   backdrop-filter: blur(18px) saturate(120%);
   -webkit-backdrop-filter: blur(18px) saturate(120%);
   box-shadow:
