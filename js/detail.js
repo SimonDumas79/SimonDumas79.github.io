@@ -32,6 +32,7 @@
     title.textContent = entry.querySelector('h4').textContent.replace(/↗/g, '').trim();
     body.replaceChildren(tpl.content.cloneNode(true));
     place(entry);
+    void wrap.offsetHeight; // flush styles after a move so the open animates from closed
     wrap.classList.add('open');
     body.scrollTop = 0;
     updateMore();
