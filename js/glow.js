@@ -47,11 +47,18 @@
     });
   }
 
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    seen = true;
-    request();
-  }, { passive: true });
+  function at(x, y) { mx = x; my = y; seen = true; request(); }
+
+  document.addEventListener('mousemove', e => at(e.clientX, e.clientY), { passive: true });
+
+  // Touch never fires mousemove while a finger is down - the compatibility mouse events only arrive
+  // once the touch ends, which is why a tap moved the light and a swipe did not. Pointer events do
+  // not fix it either: the moment the browser claims a gesture for scrolling it fires pointercancel
+  // and the pointermove stream stops, and an up-or-down swipe is exactly that gesture. touchmove
+  // keeps firing on a passive listener for the whole scroll, so it is the one that actually tracks.
+  const track = e => { const t = e.touches[0]; if (t) at(t.clientX, t.clientY); };
+  document.addEventListener('touchstart', track, { passive: true });
+  document.addEventListener('touchmove', track, { passive: true });
 
   // The pointer is in viewport coordinates but the light is positioned inside its panel, so any
   // scroll that moves a panel relative to the viewport moves the light off the cursor. On narrow

@@ -200,6 +200,13 @@
   // attached can still report a coarse primary pointer, which would wrongly disable the glow.
   window.addEventListener('mousemove', e => { mouse = { x: e.clientX, y: e.clientY }; schedule(); }, { passive: true });
   document.addEventListener('mouseleave', () => { mouse = null; schedule(); });
+
+  // Same story for touch, and the same reason glow.js uses touchmove rather than pointermove: no
+  // mousemove arrives while a finger is down, and a pointermove stream is cancelled the moment a
+  // swipe turns into a scroll. touchmove outlives that, so the glow follows the finger down the page.
+  const touch = e => { const t = e.touches[0]; if (t) { mouse = { x: t.clientX, y: t.clientY }; schedule(); } };
+  window.addEventListener('touchstart', touch, { passive: true });
+  window.addEventListener('touchmove', touch, { passive: true });
   let rt;
   window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(resize, 120); });
   resize();
