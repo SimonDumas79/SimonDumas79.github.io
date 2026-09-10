@@ -245,20 +245,17 @@ body {
 /* The active dot stretches into a pill and fills over the dwell time. The fill is the clock -
    shots.js advances on its animationend - so the bar and the advance cannot drift apart. */
 .shots-dots button.is-on { width: 22px; background: rgba(255, 255, 255, 0.2); }
+/* The bar's width comes from --shots-progress, which shots.js steps four times a second. It is
+   deliberately not a CSS animation: this dot sits inside a backdrop-filter panel, and anything
+   animating continuously inside one makes the glass re-blur every frame - 29fps against 60. */
 .shots-dots button.is-on::after {
   content: '';
   position: absolute;
-  inset: 0 auto 0 0;
-  width: 0;
+  inset: 0;
   background: var(--blue);
-  animation: shots-fill var(--shots-interval) linear forwards;
+  transform: scaleX(var(--shots-progress, 0));
+  transform-origin: left center;
 }
-@keyframes shots-fill { to { width: 100%; } }
-/* Hold while someone is looking at it, and whenever the card is not open. Pausing the fill
-   pauses the advance too, since there is only the one clock. */
-.shots:hover .shots-dots button.is-on::after,
-.shots:has(:focus-visible) .shots-dots button.is-on::after,
-.detail-wrap:not(.open) .shots-dots button.is-on::after { animation-play-state: paused; }
 /* Trailer. The iframe is only built when the card opens, so YouTube loads nothing on page load. */
 .embed {
   position: relative;
@@ -502,8 +499,8 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; scroll-behavior: auto !important; }
-  /* Killing the fill also stops the cycling, since the fill is what drives it. The active dot
-     goes back to being a plain dot, and the screenshots only move when clicked. */
+  /* No self-cycling here (shots.js checks the same query), so there is no countdown to draw.
+     The active dot goes back to being a plain dot and the screenshots only move when clicked. */
   .shots-dots button.is-on { width: 6px; background: var(--blue); }
-  .shots-dots button.is-on::after { animation: none; }
+  .shots-dots button.is-on::after { display: none; }
 }
