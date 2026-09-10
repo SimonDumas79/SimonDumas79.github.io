@@ -12,7 +12,6 @@
   --text: #FFFFFF;
   --muted: #8A93A3;
   --surface: rgba(19, 24, 31, 0.65); /* the ground, let through a little so the mesh reads behind the text */
-  --surface-raised: #1A2127; /* a step up from the ground, for the detail card and the glow's centre */
   --surface-edge: rgba(255, 255, 255, 0.14);
   --surface-highlight: rgba(138, 147, 163, 0.1); /* the reference's inset top edge, in our grey */
   --radius: 20px;
@@ -121,7 +120,7 @@ body {
   flex-direction: column;
   position: relative; /* the light is positioned against this, and clipped by the overflow above */
   padding: 16px 20px 20px;
-  background: var(--surface-raised); /* a popup announces itself, so it starts a step above the ground */
+  background: var(--surface); /* the same surface as the content panel, mesh showing through alike */
   border: 1px solid var(--surface-edge);
   border-radius: 16px;
   box-shadow: inset 0 1px 0 var(--surface-highlight), 0 16px 40px rgba(0, 0, 0, 0.3);
