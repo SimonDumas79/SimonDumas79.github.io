@@ -11,7 +11,7 @@
   --blue-rgb: 77, 77, 255;
   --text: #FFFFFF;
   --muted: #8A93A3;
-  --surface: rgba(19, 24, 31, 0.65); /* the ground, let through a little so the mesh reads behind the text */
+  --surface: rgba(19, 24, 31, 0.72); /* the ground, let through a little so the mesh reads behind the text */
   --surface-edge: rgba(255, 255, 255, 0.14);
   --surface-highlight: rgba(138, 147, 163, 0.1); /* the reference's inset top edge, in our grey */
   --radius: 20px;
