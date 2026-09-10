@@ -3,10 +3,10 @@
 // Delegated from the document because detail.js clones this markup in fresh every time a card
 // opens, so anything bound directly to the elements would die on the first clone.
 //
-// The countdown bar is stepped from here rather than run as a CSS animation. The card it sits in
-// has a backdrop-filter, and anything animating continuously inside one of those makes the glass
-// re-blur every frame: measured at 29fps, against 60fps for the same bar stepped four times a
-// second. One interval both paints the bar and advances the shot, so they cannot drift apart.
+// The countdown bar is stepped from here rather than run as a CSS animation, so that one interval
+// both paints the bar and advances the shot and the two cannot drift apart. It also keeps the page
+// cheap: this started life as a CSS animation inside a frosted panel and cost half the frame rate,
+// which is why the panels are flat now.
 (() => {
   const STEP = 250; // ms between repaints - 20 steps across a 5s dwell, about 1px each on a 22px bar
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');

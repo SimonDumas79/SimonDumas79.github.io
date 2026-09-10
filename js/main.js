@@ -1,5 +1,5 @@
 // Tabs follow the scroll; clicking a tab scrolls to its section.
-// The glass panel is the scroller on desktop, the document on narrow screens.
+// The panel is the scroller on desktop, the document on narrow screens.
 (() => {
   const panel = document.getElementById('panel');
   const tabsNav = document.querySelector('.tabs');

@@ -1,14 +1,16 @@
-/* Palette: ScreenSpace ground + player-1 blue, white text, liquid-glass panel.
-   Decisions and reasoning: secondbrain/life/portfolio-site.md */
+/* Palette: ScreenSpace ground + player-1 blue, white text, flat panel.
+   The panel is a solid fill rather than frosted glass: the reference this layout came from puts
+   its content straight onto a flat dark ground and blurs nothing, and a backdrop-filter here cost
+   half the frame rate. Decisions and reasoning: secondbrain/life/portfolio-site.md */
 :root {
   --ground: #13181F;
   --blue: #4D4DFF;
   --blue-rgb: 77, 77, 255;
   --text: #FFFFFF;
   --muted: #8A93A3;
-  --glass-fill: rgba(19, 24, 31, 0.38);
-  --glass-edge: rgba(255, 255, 255, 0.14);
-  --glass-highlight: rgba(255, 255, 255, 0.18);
+  --surface: #13181F; /* same as the ground - the panel exists to hold the mesh off the text */
+  --surface-edge: rgba(255, 255, 255, 0.14);
+  --surface-highlight: rgba(255, 255, 255, 0.18);
   --radius: 20px;
   --gutter: 56px;
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -114,12 +116,10 @@ body {
   display: flex;
   flex-direction: column;
   padding: 16px 20px 20px;
-  background: var(--glass-fill);
-  border: 1px solid var(--glass-edge);
+  background: var(--surface);
+  border: 1px solid var(--surface-edge);
   border-radius: 16px;
-  backdrop-filter: blur(18px) saturate(120%);
-  -webkit-backdrop-filter: blur(18px) saturate(120%);
-  box-shadow: inset 0 1px 0 var(--glass-highlight), 0 16px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 1px 0 var(--surface-highlight), 0 16px 40px rgba(0, 0, 0, 0.3);
 }
 .detail-body {
   min-height: 0;
@@ -154,7 +154,7 @@ body {
   width: 28px;
   height: 28px;
   padding: 0;
-  border: 1px solid var(--glass-edge);
+  border: 1px solid var(--surface-edge);
   border-radius: 50%;
   background: transparent;
   color: var(--muted);
@@ -205,7 +205,7 @@ body {
   aspect-ratio: 16 / 9;
   padding: 0;
   overflow: hidden;
-  border: 1px solid var(--glass-edge);
+  border: 1px solid var(--surface-edge);
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.25);
   cursor: pointer;
@@ -245,9 +245,9 @@ body {
 /* The active dot stretches into a pill and fills over the dwell time. The fill is the clock -
    shots.js advances on its animationend - so the bar and the advance cannot drift apart. */
 .shots-dots button.is-on { width: 22px; background: rgba(255, 255, 255, 0.2); }
-/* The bar's width comes from --shots-progress, which shots.js steps four times a second. It is
-   deliberately not a CSS animation: this dot sits inside a backdrop-filter panel, and anything
-   animating continuously inside one makes the glass re-blur every frame - 29fps against 60. */
+/* The bar's width comes from --shots-progress, which shots.js steps four times a second, rather
+   than from a CSS animation. One interval both paints the bar and advances the shot, so the two
+   cannot drift; at 20 steps across a 5s dwell that is about a pixel each on a 22px bar. */
 .shots-dots button.is-on::after {
   content: '';
   position: absolute;
@@ -262,7 +262,7 @@ body {
   aspect-ratio: 16 / 9;
   margin: 4px 0 12px;
   overflow: hidden;
-  border: 1px solid var(--glass-edge);
+  border: 1px solid var(--surface-edge);
   border-radius: 10px;
   background: rgba(0, 0, 0, 0.25);
 }
@@ -281,7 +281,7 @@ body {
 .social a:hover, .social a:focus-visible { color: var(--text); }
 .social svg { width: 24px; height: 24px; }
 
-/* Right column: tab strip + glass window */
+/* Right column: tab strip + panel */
 .window {
   display: flex;
   flex-direction: column;
@@ -300,13 +300,11 @@ body {
   text-decoration: none;
   font-size: 0.95rem;
   font-weight: 500;
-  border: 1px solid var(--glass-edge);
+  border: 1px solid var(--surface-edge);
   border-bottom-color: transparent; /* open at the bottom while attached to the panel */
   border-radius: 12px 12px 0 0;
-  background: var(--glass-fill);
-  backdrop-filter: blur(18px) saturate(120%);
-  -webkit-backdrop-filter: blur(18px) saturate(120%);
-  box-shadow: inset 0 1px 0 var(--glass-highlight);
+  background: var(--surface);
+  box-shadow: inset 0 1px 0 var(--surface-highlight);
   transition: color 0.25s ease-out, border-radius 0.3s ease, border-bottom-color 0.3s ease;
 }
 /* Stuck, each tab flips: instead of sitting on the panel it hangs from the top of the screen.
@@ -315,7 +313,7 @@ body {
 .tabs.is-stuck .tab {
   padding: 16px 20px 18px; /* taller once pinned: a comfortable tap target at the screen edge */
   border-radius: 12px;
-  border-bottom-color: var(--glass-edge); /* closed all round - a button, not a tab on a panel */
+  border-bottom-color: var(--surface-edge); /* closed all round - a button, not a tab on a panel */
 }
 .tab .rule {
   position: absolute;
@@ -333,23 +331,21 @@ body {
 .tab.is-active { color: var(--text); }
 .tab.is-active .rule { transform: scaleX(1); }
 
-.glass {
+.surface {
   flex: 1;
   min-height: 0;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  background: var(--glass-fill);
-  border: 1px solid var(--glass-edge);
+  background: var(--surface);
+  border: 1px solid var(--surface-edge);
   border-radius: var(--radius);
-  backdrop-filter: blur(18px) saturate(120%);
-  -webkit-backdrop-filter: blur(18px) saturate(120%);
   box-shadow:
-    inset 0 1px 0 var(--glass-highlight),
+    inset 0 1px 0 var(--surface-highlight),
     0 0 0 1px rgba(255, 255, 255, 0.03),
     0 24px 60px rgba(0, 0, 0, 0.35);
 }
-.glass-scroll {
+.surface-scroll {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
@@ -357,8 +353,8 @@ body {
   scrollbar-width: none; /* scrolls, but shows no bar */
   outline: none;
 }
-.glass-scroll::-webkit-scrollbar { display: none; }
-.glass-scroll[data-more] {
+.surface-scroll::-webkit-scrollbar { display: none; }
+.surface-scroll[data-more] {
   mask-image: linear-gradient(to bottom, #000 calc(100% - 56px), transparent);
   -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 56px), transparent);
 }
@@ -369,7 +365,7 @@ body {
 .section > h3 {
   margin: 0 0 18px;
   padding-bottom: 10px;
-  border-bottom: 1px solid var(--glass-edge);
+  border-bottom: 1px solid var(--surface-edge);
   font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -488,8 +484,8 @@ body {
     pointer-events: none;
     z-index: -1;
   }
-  .glass { overflow: visible; display: block; }
-  .glass-scroll { overflow: visible; padding: 8px 22px 28px; }
+  .surface { overflow: visible; display: block; }
+  .surface-scroll { overflow: visible; padding: 8px 22px 28px; }
   .entry { grid-template-columns: 1fr; gap: 6px; padding: 14px 12px; margin: 0 -12px; }
   .entries:hover .entry { opacity: 1; }
   /* the detail card sits under the clicked entry here */
