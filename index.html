@@ -71,11 +71,28 @@
               <ul class="tags"><li>Unity</li><li>C#</li><li>Netcode for GameObjects</li><li>Steam</li></ul>
             </div>
             <template class="detail-src">
-              <div class="slot">screenshot &middot; territory system</div>
+              <figure class="shots" data-at="0">
+                <button class="shots-frame" type="button" aria-label="Screenshot 1 of 5. Click for the next.">
+                  <img class="is-shown" src="media/screenspace/shot-1.jpg" width="1280" height="720" alt="A blue territory and a red one meeting at a contested purple boundary. The blue ship's shots cross the divide and the red ship bursts.">
+                  <img src="media/screenspace/shot-2.jpg" width="1280" height="720" alt="Blue, red and yellow territories share the board while a thick white beam cuts diagonally across all three." aria-hidden="true">
+                  <img src="media/screenspace/shot-3.jpg" width="1280" height="720" alt="A purple territory squeezed into the top-left corner by a teal one that now holds most of the board." aria-hidden="true">
+                  <img src="media/screenspace/shot-4.jpg" width="1280" height="720" alt="Four territories in blue, green, yellow and red. The yellow ship's beam reaches the red ship at the right edge and detonates." aria-hidden="true">
+                  <img src="media/screenspace/shot-5.jpg" width="1280" height="720" alt="The opening state: four equal quadrants in blue, red, yellow and green, one ship sitting in each." aria-hidden="true">
+                </button>
+                <div class="shots-dots">
+                  <button type="button" class="is-on" aria-label="Screenshot 1"></button>
+                  <button type="button" aria-label="Screenshot 2"></button>
+                  <button type="button" aria-label="Screenshot 3"></button>
+                  <button type="button" aria-label="Screenshot 4"></button>
+                  <button type="button" aria-label="Screenshot 5"></button>
+                </div>
+              </figure>
               <p>The environment is generated and divided, with sections swapping owners on each hit.</p>
               <p>The bots navigate a graph for generalized movement.</p>
               <p>The online play uses host authoritative hit validation with client prediction.</p>
-              <div class="slot">video &middot; a round in progress</div>
+              <div class="embed">
+                <iframe src="https://www.youtube-nocookie.com/embed/ADQ1OkvFNzI?rel=0" title="Screen Space Trailer" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+              </div>
               <p><a href="https://store.steampowered.com/app/4101820/Screen_Space/" class="entry-link" target="_blank" rel="noreferrer">Steam page<span class="arrow" aria-hidden="true">&#8599;</span></a></p>
             </template>
           </li>
@@ -161,6 +178,7 @@
 
 <script src="js/mesh.js"></script>
 <script src="js/main.js"></script>
+<script src="js/shots.js"></script>
 <script src="js/detail.js"></script>
 </body>
 </html>

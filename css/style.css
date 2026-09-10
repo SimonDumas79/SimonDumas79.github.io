@@ -191,6 +191,70 @@ body {
   margin: 4px 0 12px;
 }
 .detail-body p.placeholder { padding: 10px 12px; }
+
+/* Screenshot cycler. One 16:9 frame with every shot stacked inside it, crossfaded on opacity.
+   The frame reserves its own height, so an image landing late never jumps the card mid-open. */
+.shots { margin: 4px 0 12px; }
+.shots-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--glass-edge);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+.detail-body .shots-frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0; /* .detail-body img spaces a standalone image; these are stacked, not spaced */
+  border-radius: 0;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.detail-body .shots-frame img.is-shown { opacity: 1; }
+.shots-frame:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.shots-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+.shots-dots button {
+  width: 6px;
+  height: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.shots-dots button:hover { background: rgba(255, 255, 255, 0.5); }
+.shots-dots button.is-on { background: var(--blue); transform: scale(1.35); }
+/* Trailer. The iframe is only built when the card opens, so YouTube loads nothing on page load. */
+.embed {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  margin: 4px 0 12px;
+  overflow: hidden;
+  border: 1px solid var(--glass-edge);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.25);
+}
+.embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
 .social a {
   display: inline-flex;
   color: var(--muted);
