@@ -508,15 +508,20 @@ body {
     top: -12px;
     padding-top: 0;
   }
-  .tabs.is-stuck::before {
+  /* Always in the page so it has something to fade from - sticking only changes its opacity.
+     Built by .is-stuck alone it appeared fully formed the instant the strip detached. */
+  .tabs::before {
     content: '';
     position: fixed;
     inset: 0 0 auto 0;
     height: 84px;
     background: linear-gradient(to bottom, var(--ground) 0%, rgba(19, 24, 31, 0.82) 50%, rgba(19, 24, 31, 0) 100%);
     pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.25s ease;
     z-index: -1;
   }
+  .tabs.is-stuck::before { opacity: 1; }
   /* Clipping again, not visible: the light is a child of the panel, and with nothing to clip it
      the glow spilled across the whole screen. Nothing else here overflows - the panel is
      auto-height on narrow - and .tabs is a sibling, so its stickiness is untouched. */

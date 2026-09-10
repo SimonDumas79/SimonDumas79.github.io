@@ -33,7 +33,8 @@
     if (scrollTop() <= 2) active = 0;
     else if (maxScroll() > 0 && scrollTop() >= maxScroll() - 2) active = sections.length - 1;
     tabs.forEach((t, i) => t.classList.toggle('is-active', i === active));
-    // narrow screens: the strip is sticky; once it has detached from the panel the tabs close into chips
+    // narrow screens: the strip is sticky; once it has detached from the panel the tabs ride up to
+    // the screen edge and the vignette behind them fades in
     tabsNav.classList.toggle('is-stuck', !usePanel() && tabsNav.getBoundingClientRect().top <= 0.5);
   }
   function onScroll() { if (!raf) raf = requestAnimationFrame(update); }
