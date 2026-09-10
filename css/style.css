@@ -75,6 +75,7 @@ body {
   font-weight: 500;
   color: var(--text);
 }
+/* Kept while the slot is empty: the line is unresolved, not abandoned. See index.html. */
 .tagline {
   margin: 14px 0 0;
   max-width: 28ch;
@@ -464,7 +465,7 @@ body {
   transition: transform 0.2s ease;
 }
 .entry-link:hover .arrow { transform: translate(2px, -2px); }
-.quirk { color: var(--text) !important; font-style: italic; }
+.premise { color: var(--text) !important; font-style: italic; }
 
 .tags {
   list-style: none;
