@@ -1,15 +1,16 @@
 /* Palette: ScreenSpace ground + player-1 blue, white text, flat panel.
    The panel is a solid fill rather than frosted glass: the reference this layout came from blurs
-   nothing, and a backdrop-filter here cost half the frame rate. The panel wears the same treatment
-   the reference gives a hovered card - a fill one step up from the ground, a 1px inset top edge,
-   a soft drop shadow. Decisions and reasoning: secondbrain/life/portfolio-site.md */
+   nothing, and a backdrop-filter here cost half the frame rate. The panel rests at the ground
+   colour and lifts on hover the way the reference lifts a hovered card - a fill one step up, a 1px
+   inset top edge, a drop shadow. Decisions and reasoning: secondbrain/life/portfolio-site.md */
 :root {
   --ground: #13181F;
   --blue: #4D4DFF;
   --blue-rgb: 77, 77, 255;
   --text: #FFFFFF;
   --muted: #8A93A3;
-  --surface: #1A2127; /* one step up from the ground - the lift the reference puts on a hovered card */
+  --surface: #13181F; /* resting: the ground, so the panel masks the mesh without announcing itself */
+  --surface-hover: #1A2127; /* the lift the reference puts on a hovered card, same delta on our ground */
   --surface-edge: rgba(255, 255, 255, 0.14);
   --surface-highlight: rgba(138, 147, 163, 0.1); /* the reference's inset top edge, in our grey */
   --radius: 20px;
@@ -117,7 +118,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 16px 20px 20px;
-  background: var(--surface);
+  background: var(--surface-hover); /* a popup announces itself, so it sits lifted rather than waiting for a hover */
   border: 1px solid var(--surface-edge);
   border-radius: 16px;
   box-shadow: inset 0 1px 0 var(--surface-highlight), 0 16px 40px rgba(0, 0, 0, 0.3);
@@ -306,7 +307,8 @@ body {
   border-radius: 12px 12px 0 0;
   background: var(--surface);
   box-shadow: inset 0 1px 0 var(--surface-highlight);
-  transition: color 0.25s ease-out, border-radius 0.3s ease, border-bottom-color 0.3s ease;
+  transition: color 0.25s ease-out, border-radius 0.3s ease, border-bottom-color 0.3s ease,
+              background-color 0.15s ease;
 }
 /* Stuck, each tab flips: instead of sitting on the panel it hangs from the top of the screen.
    The rounding moves to the bottom corners and the open edge moves to the top, so the flat,
@@ -328,6 +330,7 @@ body {
   transform-origin: center;
   transition: transform 0.25s ease-out;
 }
+.window:hover .tab { background: var(--surface-hover); }
 .tab:hover { color: var(--text); }
 .tab.is-active { color: var(--text); }
 .tab.is-active .rule { transform: scaleX(1); }
@@ -341,6 +344,16 @@ body {
   background: var(--surface);
   border: 1px solid var(--surface-edge);
   border-radius: var(--radius);
+  box-shadow:
+    inset 0 1px 0 var(--surface-highlight),
+    0 0 0 1px rgba(255, 255, 255, 0.03);
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+/* The reference's hovered-card treatment, on the whole content column: the fill steps up and the
+   shadow arrives. Hung off .window so the tab strip lifts with the panel - they read as one piece,
+   and a tab left behind at the resting colour would look detached. */
+.window:hover .surface {
+  background: var(--surface-hover);
   box-shadow:
     inset 0 1px 0 var(--surface-highlight),
     0 0 0 1px rgba(255, 255, 255, 0.03),
