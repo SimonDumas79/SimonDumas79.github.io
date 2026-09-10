@@ -95,7 +95,13 @@ body {
 .detail-wrap {
   display: grid;
   grid-template-rows: 0fr;
-  margin: 32px 0 28px;
+  /* A closed card has to take up no vertical room at all. The rows collapse to 0fr but margins are
+     not part of that collapse, so the spacing is carried by .open rather than set here - otherwise
+     a closed card leaves its own margins behind. On wide that is invisible, because .social is
+     pinned with margin-top:auto and simply absorbs it; on narrow the card sits between two entries
+     and it reads as a gap under the one it was opened from. It eases on the same curve and the same
+     0.45s as the height, so the gap closes with the card instead of snapping shut after it. */
+  margin: 0;
   min-height: 0;
   flex: 0 1 auto;
   opacity: 0;
@@ -103,16 +109,19 @@ body {
   visibility: hidden;
   transition:
     grid-template-rows 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+    margin-block-start 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+    margin-block-end 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
     opacity 0.3s ease,
     transform 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
     visibility 0s linear 0.45s;
 }
 .detail-wrap.open {
   grid-template-rows: 1fr;
+  margin-block: 32px 28px;
   opacity: 1;
   transform: none;
   visibility: visible;
-  transition-delay: 0s, 0s, 0s, 0s;
+  transition-delay: 0s; /* one value covers every property above, visibility's 0.45s included */
 }
 .detail {
   min-height: 0;
@@ -125,6 +134,20 @@ body {
   border: 1px solid var(--surface-edge);
   border-radius: 16px;
   box-shadow: inset 0 1px 0 var(--surface-highlight), 0 16px 40px rgba(0, 0, 0, 0.3);
+  transition:
+    padding-block-start 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+    padding-block-end 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-block-start-width 0.45s cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-block-end-width 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+/* A 0fr row cannot shrink past the item's own padding and border: with box-sizing: border-box those
+   are the floor of its border box, so min-height: 0 still left 16 + 20 + 2 = 38px standing. That is
+   the gap itself - invisible on wide, where .social's auto margin absorbs it, and plainly visible on
+   narrow, where the closed card sits between two entries. Collapsing them with the row is what gets
+   it to actual zero, on the same curve and the same 0.45s so it stays one movement. */
+.detail-wrap:not(.open) .detail {
+  padding-block: 0;
+  border-block-width: 0;
 }
 .detail-body {
   position: relative;
@@ -533,8 +556,10 @@ body {
   .surface-scroll { overflow: visible; padding: 8px 22px 28px; }
   .entry { grid-template-columns: 1fr; gap: 6px; padding: 14px 12px; margin: 0 -12px; }
   .entries:hover .entry { opacity: 1; }
-  /* the detail card sits under the clicked entry here */
-  .entries .detail-wrap { margin: 6px -12px 14px; }
+  /* the detail card sits under the clicked entry here. The bleed is always on; the vertical
+     spacing only exists while the card is open, same as the base rule. */
+  .entries .detail-wrap { margin-inline: -12px; }
+  .entries .detail-wrap.open { margin-block: 6px 14px; }
   .identity .detail-wrap { display: none; } /* it moves under the entry when opened here */
 }
 
