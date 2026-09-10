@@ -1,16 +1,17 @@
 /* Palette: ScreenSpace ground + player-1 blue, white text, flat panel.
-   The panel is a solid fill rather than frosted glass: the reference this layout came from puts
-   its content straight onto a flat dark ground and blurs nothing, and a backdrop-filter here cost
-   half the frame rate. Decisions and reasoning: secondbrain/life/portfolio-site.md */
+   The panel is a solid fill rather than frosted glass: the reference this layout came from blurs
+   nothing, and a backdrop-filter here cost half the frame rate. The panel wears the same treatment
+   the reference gives a hovered card - a fill one step up from the ground, a 1px inset top edge,
+   a soft drop shadow. Decisions and reasoning: secondbrain/life/portfolio-site.md */
 :root {
   --ground: #13181F;
   --blue: #4D4DFF;
   --blue-rgb: 77, 77, 255;
   --text: #FFFFFF;
   --muted: #8A93A3;
-  --surface: #13181F; /* same as the ground - the panel exists to hold the mesh off the text */
+  --surface: #1A2127; /* one step up from the ground - the lift the reference puts on a hovered card */
   --surface-edge: rgba(255, 255, 255, 0.14);
-  --surface-highlight: rgba(255, 255, 255, 0.18);
+  --surface-highlight: rgba(138, 147, 163, 0.1); /* the reference's inset top edge, in our grey */
   --radius: 20px;
   --gutter: 56px;
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
