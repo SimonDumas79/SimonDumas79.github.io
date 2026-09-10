@@ -23,7 +23,12 @@
   for (const l of lights) l.reach = reach(l.el);
   window.addEventListener('resize', () => { for (const l of lights) l.reach = reach(l.el); }, { passive: true });
 
-  let mx = 0, my = 0, queued = false, seen = false;
+  let mx = 0, my = 0, queued = false, seen = false, lastTouch = 0, gone = true;
+
+  // A tap fires compatibility mouse events, and they arrive *after* touchend - so without this the
+  // lift would fade the light out and the echo would switch it straight back on. Anything this
+  // close behind a touch is that echo rather than a real mouse. mesh.js carries the same guard.
+  const TOUCH_ECHO = 600;
 
   function request() { if (!queued) { queued = true; requestAnimationFrame(draw); } }
 
@@ -40,25 +45,39 @@
       const r = rects[i];
       if (!r.width) { light(l, false); return; } // a closed card has nothing to light
       const x = mx - r.left, y = my - r.top;
-      const on = x > -l.reach && y > -l.reach && x < r.width + l.reach && y < r.height + l.reach;
+      const on = !gone && x > -l.reach && y > -l.reach && x < r.width + l.reach && y < r.height + l.reach;
       // Only one panel is ever lit, so the other is left alone rather than written every frame.
       if (on || l.lit) l.el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
       light(l, on);
     });
   }
 
-  function at(x, y) { mx = x; my = y; seen = true; request(); }
+  function at(x, y) { mx = x; my = y; seen = true; gone = false; request(); }
 
-  document.addEventListener('mousemove', e => at(e.clientX, e.clientY), { passive: true });
+  // Leaving with a mouse and lifting a finger are the same thing: the light fades where it stands.
+  // The flag matters as much as the class - draw() runs again on every scroll, and a momentum
+  // scroll after a lift would otherwise recompute the position as still inside the panel and put
+  // the light back on halfway through its own fade.
+  function release() { gone = true; for (const l of lights) light(l, false); }
+
+  document.addEventListener('mousemove', e => {
+    if (performance.now() - lastTouch < TOUCH_ECHO) return;
+    at(e.clientX, e.clientY);
+  }, { passive: true });
 
   // Touch never fires mousemove while a finger is down - the compatibility mouse events only arrive
   // once the touch ends, which is why a tap moved the light and a swipe did not. Pointer events do
   // not fix it either: the moment the browser claims a gesture for scrolling it fires pointercancel
   // and the pointermove stream stops, and an up-or-down swipe is exactly that gesture. touchmove
   // keeps firing on a passive listener for the whole scroll, so it is the one that actually tracks.
-  const track = e => { const t = e.touches[0]; if (t) at(t.clientX, t.clientY); };
+  const track = e => { lastTouch = performance.now(); const t = e.touches[0]; if (t) at(t.clientX, t.clientY); };
   document.addEventListener('touchstart', track, { passive: true });
   document.addEventListener('touchmove', track, { passive: true });
+
+  // Only the last finger up ends it; with two down, one lifting leaves the other driving.
+  const lift = e => { lastTouch = performance.now(); if (!e.touches.length) release(); };
+  document.addEventListener('touchend', lift, { passive: true });
+  document.addEventListener('touchcancel', lift, { passive: true });
 
   // The pointer is in viewport coordinates but the light is positioned inside its panel, so any
   // scroll that moves a panel relative to the viewport moves the light off the cursor. On narrow
@@ -66,5 +85,5 @@
   // so scrolls inside the panel and the detail card are caught too - those do not bubble.
   document.addEventListener('scroll', () => { if (seen) request(); }, { passive: true, capture: true });
 
-  document.addEventListener('mouseleave', () => lights.forEach(l => light(l, false)));
+  document.addEventListener('mouseleave', release);
 })();

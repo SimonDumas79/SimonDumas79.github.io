@@ -198,15 +198,34 @@
 
   // Always listen: touch-only devices simply never fire mousemove, and a tablet with a mouse
   // attached can still report a coarse primary pointer, which would wrongly disable the glow.
-  window.addEventListener('mousemove', e => { mouse = { x: e.clientX, y: e.clientY }; schedule(); }, { passive: true });
+  // A tap fires compatibility mouse events after touchend, which would relight the mesh the moment
+  // the lift started fading it. Anything this close behind a touch is that echo. Same guard as glow.js.
+  const TOUCH_ECHO = 600;
+  let lastTouch = 0;
+
+  window.addEventListener('mousemove', e => {
+    if (performance.now() - lastTouch < TOUCH_ECHO) return;
+    mouse = { x: e.clientX, y: e.clientY };
+    schedule();
+  }, { passive: true });
   document.addEventListener('mouseleave', () => { mouse = null; schedule(); });
 
   // Same story for touch, and the same reason glow.js uses touchmove rather than pointermove: no
   // mousemove arrives while a finger is down, and a pointermove stream is cancelled the moment a
   // swipe turns into a scroll. touchmove outlives that, so the glow follows the finger down the page.
-  const touch = e => { const t = e.touches[0]; if (t) { mouse = { x: t.clientX, y: t.clientY }; schedule(); } };
+  const touch = e => {
+    lastTouch = performance.now();
+    const t = e.touches[0];
+    if (t) { mouse = { x: t.clientX, y: t.clientY }; schedule(); }
+  };
   window.addEventListener('touchstart', touch, { passive: true });
   window.addEventListener('touchmove', touch, { passive: true });
+
+  // Lifting the last finger drops the target to nothing and step() eases every edge down from
+  // wherever it had got to, which is the same fade leaving with a mouse gives. DECAY, not RISE.
+  const lift = e => { lastTouch = performance.now(); if (!e.touches.length) { mouse = null; schedule(); } };
+  window.addEventListener('touchend', lift, { passive: true });
+  window.addEventListener('touchcancel', lift, { passive: true });
   let rt;
   window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(resize, 120); });
   resize();
