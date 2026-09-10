@@ -1,8 +1,9 @@
 /* Palette: ScreenSpace ground + player-1 blue, white text, flat panel.
    The panel is a solid fill rather than frosted glass: the reference this layout came from blurs
    nothing, and a backdrop-filter here cost half the frame rate. The panel sits at the ground colour
-   and lights up around the cursor, the same idea as the mesh behind the page - the mesh cannot show
-   through an opaque panel, so the panel carries its own light.
+   and lights up around the cursor, the same idea as the mesh behind the page. The panel is only
+   part-opaque, so the mesh reads faintly through it, but far too faintly to light it - the panel
+   carries its own light rather than borrowing one.
    Decisions and reasoning: secondbrain/life/portfolio-site.md */
 :root {
   --ground: #13181F;
@@ -10,7 +11,7 @@
   --blue-rgb: 77, 77, 255;
   --text: #FFFFFF;
   --muted: #8A93A3;
-  --surface: #13181F; /* resting: the ground, so the panel masks the mesh without announcing itself */
+  --surface: rgba(19, 24, 31, 0.65); /* the ground, let through a little so the mesh reads behind the text */
   --surface-raised: #1A2127; /* a step up from the ground, for the detail card and the glow's centre */
   --surface-edge: rgba(255, 255, 255, 0.14);
   --surface-highlight: rgba(138, 147, 163, 0.1); /* the reference's inset top edge, in our grey */
@@ -311,7 +312,8 @@ body {
   border: 1px solid var(--surface-edge);
   border-bottom-color: transparent; /* open at the bottom while attached to the panel */
   border-radius: 12px 12px 0 0;
-  background: var(--surface);
+  background: var(--ground); /* solid on purpose: a see-through chip lets text scroll through the
+                                pinned row on narrow screens, which took four attempts to kill */
   box-shadow: inset 0 1px 0 var(--surface-highlight);
   transition: color 0.25s ease-out, border-radius 0.3s ease, border-bottom-color 0.3s ease,
               background-color 0.15s ease;
@@ -515,7 +517,10 @@ body {
     pointer-events: none;
     z-index: -1;
   }
-  .surface { overflow: visible; display: block; }
+  /* Clipping again, not visible: the light is a child of the panel, and with nothing to clip it
+     the glow spilled across the whole screen. Nothing else here overflows - the panel is
+     auto-height on narrow - and .tabs is a sibling, so its stickiness is untouched. */
+  .surface { overflow: hidden; display: block; }
   .surface-scroll { overflow: visible; padding: 8px 22px 28px; }
   .entry { grid-template-columns: 1fr; gap: 6px; padding: 14px 12px; margin: 0 -12px; }
   .entries:hover .entry { opacity: 1; }
