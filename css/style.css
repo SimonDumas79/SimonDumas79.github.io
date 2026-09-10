@@ -364,9 +364,10 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 440px;
-  height: 440px;
-  margin: -220px 0 0 -220px;
+  --glow-size: 300px; /* one place to tune it; glow.js reads this for its approach distance too */
+  width: var(--glow-size);
+  height: var(--glow-size);
+  margin: calc(var(--glow-size) / -2) 0 0 calc(var(--glow-size) / -2);
   border-radius: 50%;
   background: radial-gradient(closest-side circle,
     rgba(var(--blue-rgb), 0.14), rgba(var(--blue-rgb), 0.05) 55%, rgba(var(--blue-rgb), 0));

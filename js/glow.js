@@ -7,13 +7,20 @@
 // so a write never dirties layout that a later read has to recompute, and the lit class is only
 // touched when it actually changes.
 (() => {
-  const REACH = 220; // px beyond a panel's edge where its light starts to come up
+  // How far outside a panel the light starts coming up. Half the light's own width, so it fades in
+  // exactly as its edge reaches the panel - read from the CSS so --glow-size stays the only dial.
+  function reach(el) {
+    const n = parseFloat(getComputedStyle(el).getPropertyValue('--glow-size'));
+    return (n || 300) / 2;
+  }
   const lights = [
     ['.surface', 'panelGlow'],
     ['.detail', 'detailGlow'],
   ].map(([sel, id]) => ({ box: document.querySelector(sel), el: document.getElementById(id), lit: false }))
    .filter(l => l.box && l.el);
   if (!lights.length) return;
+  for (const l of lights) l.reach = reach(l.el);
+  window.addEventListener('resize', () => { for (const l of lights) l.reach = reach(l.el); }, { passive: true });
 
   let mx = 0, my = 0, queued = false;
 
@@ -30,7 +37,7 @@
       const r = rects[i];
       if (!r.width) { light(l, false); return; } // a closed card has nothing to light
       const x = mx - r.left, y = my - r.top;
-      const on = x > -REACH && y > -REACH && x < r.width + REACH && y < r.height + REACH;
+      const on = x > -l.reach && y > -l.reach && x < r.width + l.reach && y < r.height + l.reach;
       // Only one panel is ever lit, so the other is left alone rather than written every frame.
       if (on || l.lit) l.el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
       light(l, on);
