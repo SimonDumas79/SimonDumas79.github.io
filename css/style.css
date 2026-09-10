@@ -118,13 +118,16 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  position: relative; /* the light is positioned against this, and clipped by the overflow above */
   padding: 16px 20px 20px;
-  background: var(--surface-raised); /* a popup announces itself, so it sits lifted rather than waiting for a hover */
+  background: var(--surface-raised); /* a popup announces itself, so it starts a step above the ground */
   border: 1px solid var(--surface-edge);
   border-radius: 16px;
   box-shadow: inset 0 1px 0 var(--surface-highlight), 0 16px 40px rgba(0, 0, 0, 0.3);
 }
 .detail-body {
+  position: relative;
+  z-index: 1; /* over the light, not under it */
   min-height: 0;
   flex: 1 1 auto;
   overflow-y: auto;
@@ -137,6 +140,8 @@ body {
   -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 48px), transparent);
 }
 .detail-head {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -350,9 +355,10 @@ body {
     0 24px 60px rgba(0, 0, 0, 0.35);
   position: relative; /* the glow is positioned against this, and clipped by the overflow above */
 }
-/* The cursor light. A gradient this size is expensive to repaint, so it is painted once and only
-   ever moved with a transform - glow.js does nothing but write that transform. Radius matches the
-   mesh's GLOW_RADIUS so the light inside the panel and the light on the triangles read as one. */
+/* The cursor light, in the content panel and the detail card - the only two things that carry it.
+   A gradient this size is expensive to repaint, so it is painted once and only ever moved with a
+   transform; glow.js does nothing but write that transform. Each panel is opaque, so each needs
+   its own copy: there is no light behind them to show through. */
 .glow {
   position: absolute;
   top: 0;
@@ -362,7 +368,7 @@ body {
   margin: -220px 0 0 -220px;
   border-radius: 50%;
   background: radial-gradient(closest-side circle,
-    rgba(var(--blue-rgb), 0.2), rgba(var(--blue-rgb), 0.07) 55%, rgba(var(--blue-rgb), 0));
+    rgba(var(--blue-rgb), 0.14), rgba(var(--blue-rgb), 0.05) 55%, rgba(var(--blue-rgb), 0));
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.35s ease;
