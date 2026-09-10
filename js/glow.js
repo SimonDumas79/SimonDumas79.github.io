@@ -1,5 +1,6 @@
-// The content panel and the detail card light up around the cursor. Each is opaque, so neither can
-// borrow a light from behind it - they carry their own, and the backdrop mesh carries none.
+// The content panel and the detail card light up around the cursor. This is their own light, not
+// the mesh's showing through: the panels are only part-transparent, so the mesh behind them reads
+// but is far too faint to light them. Both lights are live at once and they overlap by design.
 //
 // The gradient is painted once by CSS and only ever translated, so following the cursor costs a
 // composite rather than a repaint. The pointer handler does no DOM work at all: it records a

@@ -1,9 +1,9 @@
 /* Palette: ScreenSpace ground + player-1 blue, white text, flat panel.
    The panel is a solid fill rather than frosted glass: the reference this layout came from blurs
    nothing, and a backdrop-filter here cost half the frame rate. The panel sits at the ground colour
-   and lights up around the cursor, the same idea as the mesh behind the page. The panel is only
-   part-opaque, so the mesh reads faintly through it, but far too faintly to light it - the panel
-   carries its own light rather than borrowing one.
+   and lights up around the cursor, alongside the mesh behind the page doing the same to its
+   triangles. The panel is only part-opaque, so the lit mesh reads through it, but far too faintly
+   to light the panel itself - hence a light of its own as well.
    Decisions and reasoning: secondbrain/life/portfolio-site.md */
 :root {
   --ground: #13181F;
@@ -356,10 +356,10 @@ body {
     0 24px 60px rgba(0, 0, 0, 0.35);
   position: relative; /* the glow is positioned against this, and clipped by the overflow above */
 }
-/* The cursor light, in the content panel and the detail card - the only two things that carry it.
+/* The cursor light the two panels carry. Separate from the mesh's own glow behind the page, which
+   reads through the part-transparent fill but is far too faint to light the panel itself.
    A gradient this size is expensive to repaint, so it is painted once and only ever moved with a
-   transform; glow.js does nothing but write that transform. Each panel is opaque, so each needs
-   its own copy: there is no light behind them to show through. */
+   transform; glow.js does nothing but write that transform. */
 .glow {
   position: absolute;
   top: 0;
