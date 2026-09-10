@@ -1,8 +1,9 @@
 /* Palette: ScreenSpace ground + player-1 blue, white text, flat panel.
    The panel is a solid fill rather than frosted glass: the reference this layout came from blurs
-   nothing, and a backdrop-filter here cost half the frame rate. The panel rests at the ground
-   colour and lifts on hover the way the reference lifts a hovered card - a fill one step up, a 1px
-   inset top edge, a drop shadow. Decisions and reasoning: secondbrain/life/portfolio-site.md */
+   nothing, and a backdrop-filter here cost half the frame rate. The panel sits at the ground colour
+   and lights up around the cursor, the same idea as the mesh behind the page - the mesh cannot show
+   through an opaque panel, so the panel carries its own light.
+   Decisions and reasoning: secondbrain/life/portfolio-site.md */
 :root {
   --ground: #13181F;
   --blue: #4D4DFF;
@@ -10,7 +11,7 @@
   --text: #FFFFFF;
   --muted: #8A93A3;
   --surface: #13181F; /* resting: the ground, so the panel masks the mesh without announcing itself */
-  --surface-hover: #1A2127; /* the lift the reference puts on a hovered card, same delta on our ground */
+  --surface-raised: #1A2127; /* a step up from the ground, for the detail card and the glow's centre */
   --surface-edge: rgba(255, 255, 255, 0.14);
   --surface-highlight: rgba(138, 147, 163, 0.1); /* the reference's inset top edge, in our grey */
   --radius: 20px;
@@ -118,7 +119,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 16px 20px 20px;
-  background: var(--surface-hover); /* a popup announces itself, so it sits lifted rather than waiting for a hover */
+  background: var(--surface-raised); /* a popup announces itself, so it sits lifted rather than waiting for a hover */
   border: 1px solid var(--surface-edge);
   border-radius: 16px;
   box-shadow: inset 0 1px 0 var(--surface-highlight), 0 16px 40px rgba(0, 0, 0, 0.3);
@@ -330,7 +331,6 @@ body {
   transform-origin: center;
   transition: transform 0.25s ease-out;
 }
-.window:hover .tab { background: var(--surface-hover); }
 .tab:hover { color: var(--text); }
 .tab.is-active { color: var(--text); }
 .tab.is-active .rule { transform: scaleX(1); }
@@ -346,19 +346,30 @@ body {
   border-radius: var(--radius);
   box-shadow:
     inset 0 1px 0 var(--surface-highlight),
-    0 0 0 1px rgba(255, 255, 255, 0.03);
-  transition: background-color 0.15s ease, box-shadow 0.15s ease;
-}
-/* The reference's hovered-card treatment, on the whole content column: the fill steps up and the
-   shadow arrives. Hung off .window so the tab strip lifts with the panel - they read as one piece,
-   and a tab left behind at the resting colour would look detached. */
-.window:hover .surface {
-  background: var(--surface-hover);
-  box-shadow:
-    inset 0 1px 0 var(--surface-highlight),
     0 0 0 1px rgba(255, 255, 255, 0.03),
     0 24px 60px rgba(0, 0, 0, 0.35);
+  position: relative; /* the glow is positioned against this, and clipped by the overflow above */
 }
+/* The cursor light. A gradient this size is expensive to repaint, so it is painted once and only
+   ever moved with a transform - glow.js does nothing but write that transform. Radius matches the
+   mesh's GLOW_RADIUS so the light inside the panel and the light on the triangles read as one. */
+.glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 440px;
+  height: 440px;
+  margin: -220px 0 0 -220px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side circle,
+    rgba(var(--blue-rgb), 0.2), rgba(var(--blue-rgb), 0.07) 55%, rgba(var(--blue-rgb), 0));
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  will-change: transform;
+}
+.glow.is-lit { opacity: 1; }
+.surface-scroll { position: relative; z-index: 1; } /* content reads over the light, not under it */
 .surface-scroll {
   flex: 1;
   min-height: 0;
