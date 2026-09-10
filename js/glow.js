@@ -22,7 +22,9 @@
   for (const l of lights) l.reach = reach(l.el);
   window.addEventListener('resize', () => { for (const l of lights) l.reach = reach(l.el); }, { passive: true });
 
-  let mx = 0, my = 0, queued = false;
+  let mx = 0, my = 0, queued = false, seen = false;
+
+  function request() { if (!queued) { queued = true; requestAnimationFrame(draw); } }
 
   function light(l, on) {
     if (l.lit === on) return;
@@ -46,8 +48,15 @@
 
   document.addEventListener('mousemove', e => {
     mx = e.clientX; my = e.clientY;
-    if (!queued) { queued = true; requestAnimationFrame(draw); }
+    seen = true;
+    request();
   }, { passive: true });
+
+  // The pointer is in viewport coordinates but the light is positioned inside its panel, so any
+  // scroll that moves a panel relative to the viewport moves the light off the cursor. On narrow
+  // screens the document scrolls and the panels ride with it, which is exactly that case. Capture,
+  // so scrolls inside the panel and the detail card are caught too - those do not bubble.
+  document.addEventListener('scroll', () => { if (seen) request(); }, { passive: true, capture: true });
 
   document.addEventListener('mouseleave', () => lights.forEach(l => light(l, false)));
 })();
