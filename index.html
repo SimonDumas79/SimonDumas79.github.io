@@ -52,14 +52,15 @@
     <div class="glow" id="panelGlow" aria-hidden="true"></div>
     <div class="surface-scroll" id="panel" tabindex="0">
 
-      <!-- COPY STATUS: every sentence below is lifted verbatim from resume-2026.md or the portfolio spec,
-           as a placeholder so the layout can be judged. Simon writes the real copy.
+      <!-- COPY STATUS: About is final, in Simon's words (2026-09-10). Everything below it is still
+           placeholder, lifted verbatim from resume-2026.md or the portfolio spec so the layout could be judged.
            Each entry's <template class="detail-src"> holds what the detail card shows when the entry is clicked;
            .slot boxes mark where an image or video goes. -->
 
       <section id="about" class="section">
         <h3>About</h3>
-        <p>Game developer with a strong background in gameplay programming and systems design, with released titles on Steam and Roblox, seeking a Game Development Position.</p>
+        <p>I'm a game developer with a BS in Game Design and Development from RIT.</p>
+        <p>I work in Unity and C#, mostly on gameplay systems. I've learned to fill gaps where I see them, building a diverse set of skills in the process.</p>
       </section>
 
       <section id="projects" class="section">
@@ -90,9 +91,14 @@
                   <button type="button" aria-label="Screenshot 5"></button>
                 </div>
               </figure>
-              <p>The environment is generated and divided, with sections swapping owners on each hit.</p>
-              <p>The bots navigate a graph for generalized movement.</p>
-              <p>The online play uses host authoritative hit validation with client prediction.</p>
+              <p>The map is split into triangles once, and each triangle remembers its neighbours. A hit then just hands one triangle to the player who landed it.</p>
+              <ol class="log">
+                <li class="is-pending"><time datetime="2026-09">Sep 2026</time><span>1.1, in testing. Everything below, in one update.</span></li>
+                <li><time datetime="2026-07">Jul 2026</time><span>Level editor. Authoring maps in game, with multi-select, polygon tools and undo.</span></li>
+                <li><time datetime="2026-06">Jun 2026</time><span>Online play is host authoritative, using client prediction to make it feel smooth.</span></li>
+                <li><time datetime="2026-06">Jun 2026</time><span>CPU opponents. They path through the territory graph across four difficulty tiers, with separate combat behaviour per ship.</span></li>
+                <li><time datetime="2025-11">Nov 2025</time><span>Released on Steam.</span></li>
+              </ol>
               <div class="embed">
                 <iframe src="https://www.youtube-nocookie.com/embed/ADQ1OkvFNzI?rel=0" title="Screen Space Trailer" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
               </div>
@@ -108,6 +114,9 @@
               <ul class="tags"><li>Unity</li><li>C#</li><li>Board Bound Games</li></ul>
             </div>
             <template class="detail-src">
+              <!-- Changelog pending: Cue The Chaos lives in the BoardBoundGames repo, which is on the
+                   workhorse PC, so its milestone dates are not available here. See the workhorse job
+                   list in secondbrain/life/portfolio-site.md. -->
               <div class="slot">screenshot &middot; the table</div>
               <p>The upgrade system lets you buy items between rounds.</p>
               <p>Each ball uses a different AI, each stronger than the last.</p>
@@ -123,7 +132,14 @@
               <ul class="tags"><li>TypeScript</li><li>Node</li></ul>
             </div>
             <template class="detail-src">
-              <p>Wrote 37 offline test suites so that every feature could be tested without calling a model.</p>
+              <p>Every deliberation is filed, so the panel can read its own past work and be held to it.</p>
+              <ol class="log">
+                <li><time datetime="2026-08">Aug 2026</time><span>The referee pass. One senior reviewer reads the filed deliverable before it ships.</span></li>
+                <li><time datetime="2026-08">Aug 2026</time><span>Archive decay and a stale-claim gate, so old conclusions stop counting as settled.</span></li>
+                <li><time datetime="2026-08">Aug 2026</time><span>Prior work rides each draft as attributed opinions, mined from the archive.</span></li>
+                <li><time datetime="2026-07">Jul 2026</time><span>The archive became its own versioned repo, so the panel's past work persists.</span></li>
+                <li><time datetime="2026-07">Jul 2026</time><span>First build: the engine, a local API and a web UI, with a starting panel of agents.</span></li>
+              </ol>
               <div class="slot">image &middot; a deliberation in progress</div>
             </template>
           </li>
