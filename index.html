@@ -150,18 +150,6 @@
         <h3>Experience</h3>
         <ul class="entries">
           <li class="entry" tabindex="0">
-            <div class="entry-aside"><span class="when">Jun &ndash; Jul 2026</span></div>
-            <div class="entry-body">
-              <h4>Intern Developer &middot; <span class="org">Hack Your Summer</span></h4>
-              <p>Developed online multiplayer for ScreenSpace, a released Steam title, using Netcode for GameObjects and Unity Relay. Implemented host-authoritative shot validation and hit prediction to keep online matches fair and responsive.</p>
-              <ul class="tags"><li>Unity</li><li>C#</li><li>Netcode for GameObjects</li><li>Unity Relay</li></ul>
-            </div>
-            <template class="detail-src">
-              <p>Presented weekly demo builds with written documentation to track progress.</p>
-              <div class="slot">video &middot; online match</div>
-            </template>
-          </li>
-          <li class="entry" tabindex="0">
             <div class="entry-aside"><span class="when">Jan &ndash; Jun 2025</span></div>
             <div class="entry-body">
               <h4>Research Developer &middot; <span class="org">Rochester Institute of Technology</span></h4>
@@ -173,16 +161,57 @@
               <p class="placeholder">More about this role goes here.</p>
             </template>
           </li>
+          <!-- Academic projects, undated at Simon's request (2026-09-12). Copy is from his previous
+               portfolio (SimonDumas79/Portfolio); screenshots come from the same repo. -->
           <li class="entry" tabindex="0">
-            <div class="entry-aside"><span class="when">Jan &ndash; Aug 2023</span></div>
+            <div class="entry-aside"></div>
             <div class="entry-body">
-              <h4>Gameplay Systems Developer &middot; <span class="org">Board Bound Games</span></h4>
-              <p>Collaborated with a diverse team to build interdependent systems, such as player interactions and a dynamic enemy tracking system.</p>
-              <ul class="tags"><li>Unity</li><li>C#</li><li>GitHub</li></ul>
+              <h4>Orbital Trajectory &middot; <span class="org">Academic project</span></h4>
+              <p>Orbital Trajectory is a 2D game built alongside a team of 4 within Unity. I contributed a drag and release control system, onboarding tools, and visual aids.</p>
+              <ul class="tags"><li>Unity</li><li>C#</li></ul>
             </div>
             <template class="detail-src">
-              <p>Utilized Unity and GitHub alongside Kanban principles to organize code and track progress.</p>
-              <div class="slot">image &middot; the studio's games</div>
+              <figure class="shots" data-at="0">
+                <button class="shots-frame" type="button" aria-label="Screenshot 1 of 3. Click for the next.">
+                  <img class="is-shown" src="media/orbital-trajectory/shot-1.png" width="1192" height="670" alt="A small rocket inside the gravity ring of a red planet, blue arrows marking its orbit, with the fuel bar at the bottom of the screen.">
+                  <img src="media/orbital-trajectory/shot-2.png" width="1198" height="673" alt="The rocket boosts between a blue planet and a red one, exhaust trailing, while a pointing hand shows the player where to drag." aria-hidden="true">
+                  <img src="media/orbital-trajectory/shot-3.png" width="1178" height="662" alt="The rocket passes a yellow planet with a white moon in orbit, a blue planet and its own moon off to the left." aria-hidden="true">
+                </button>
+                <div class="shots-dots">
+                  <button type="button" class="is-on" aria-label="Screenshot 1"></button>
+                  <button type="button" aria-label="Screenshot 2"></button>
+                  <button type="button" aria-label="Screenshot 3"></button>
+                </div>
+              </figure>
+              <p>The player is a rocketship lost in space with a limited amount of boost, using the gravitational fields of nearby planets to reach the goal.</p>
+              <p>Worked on a hierarchical orbiting system allowing for complex level design, and produced custom art and effects.</p>
+              <p><a href="https://github.com/SimonDumas79/IGME-450" class="entry-link" target="_blank" rel="noreferrer">Source code<span class="arrow" aria-hidden="true">&#8599;</span></a></p>
+            </template>
+          </li>
+          <li class="entry" tabindex="0">
+            <div class="entry-aside"></div>
+            <div class="entry-body">
+              <h4>Friendly Fire &middot; <span class="org">Academic project</span></h4>
+              <p>Friendly Fire is a roguelike built in MonoGame by a team of 5. I contributed greatly to the systems and main gameplay loop of the game, programming the level system, enemy AI, movement, collision, and UI. Production utilized agile methodologies.</p>
+              <ul class="tags"><li>MonoGame</li><li>C#</li></ul>
+            </div>
+            <template class="detail-src">
+              <figure class="shots" data-at="0">
+                <button class="shots-frame" type="button" aria-label="Screenshot 1 of 4. Click for the next.">
+                  <img class="is-shown" src="media/friendly-fire/shot-1.png" width="1272" height="716" alt="A knight in blue armour stands in a purple dungeon room between two rows of pillars, green-hooded goblins lining both walls.">
+                  <img src="media/friendly-fire/shot-2.png" width="1271" height="715" alt="Goblins at the walls throw spears across the room at the knight, who has lost one of three helmet lives." aria-hidden="true">
+                  <img src="media/friendly-fire/shot-3.png" width="1267" height="713" alt="The knight enters a room ringed with pillars, a skull-faced reaper standing in each corner." aria-hidden="true">
+                  <img src="media/friendly-fire/shot-4.png" width="1272" height="716" alt="Two blue wizards fire glowing orbs and two reapers throw bones as the knight advances between barricades." aria-hidden="true">
+                </button>
+                <div class="shots-dots">
+                  <button type="button" class="is-on" aria-label="Screenshot 1"></button>
+                  <button type="button" aria-label="Screenshot 2"></button>
+                  <button type="button" aria-label="Screenshot 3"></button>
+                  <button type="button" aria-label="Screenshot 4"></button>
+                </div>
+              </figure>
+              <p>Implemented a collision system, a custom character controller, and diegetic UI.</p>
+              <p>Added multiple AI entities producing unique projectiles, and a level creation and storage system using file I/O.</p>
             </template>
           </li>
         </ul>
