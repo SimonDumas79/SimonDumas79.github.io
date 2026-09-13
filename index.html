@@ -123,24 +123,36 @@
               <div class="slot">video &middot; a round</div>
             </template>
           </li>
+          <!-- Game Graphics Engine replaced Collective, at Simon's request (2026-09-13). Collective's entry,
+               with its changelog, is intact in git history at 574e97b. Undated like the other additions;
+               copy is from his previous portfolio, screenshots from the same repo. -->
           <li class="entry" tabindex="0">
-            <div class="entry-aside"><span class="when">2026</span></div>
+            <div class="entry-aside"></div>
             <div class="entry-body">
-              <h4>Collective</h4>
-              <p class="premise">Ask a panel that argues before it agrees.</p>
-              <p>Built a multi-agent AI deliberation tool in which specialist agents debate a problem before a chair agent writes the final deliverable.</p>
-              <ul class="tags"><li>TypeScript</li><li>Node</li></ul>
+              <h4>Game Graphics Engine</h4>
+              <p>While studying game graphics programming at Rochester Institute of Technology, I built a 3D graphics engine. My graphics engine was built within DirectX11 in C++ and supports lighting, physically based rendering, normal mapping, shadow mapping, and post-processing.</p>
+              <ul class="tags"><li>C++</li><li>DirectX 11</li><li>HLSL</li></ul>
             </div>
             <template class="detail-src">
-              <p>Every deliberation is filed, so the panel can read its own past work and be held to it.</p>
-              <ol class="log">
-                <li><time datetime="2026-08">Aug 2026</time><span>The referee pass. One senior reviewer reads the filed deliverable before it ships.</span></li>
-                <li><time datetime="2026-08">Aug 2026</time><span>Archive decay and a stale-claim gate, so old conclusions stop counting as settled.</span></li>
-                <li><time datetime="2026-08">Aug 2026</time><span>Prior work rides each draft as attributed opinions, mined from the archive.</span></li>
-                <li><time datetime="2026-07">Jul 2026</time><span>The archive became its own versioned repo, so the panel's past work persists.</span></li>
-                <li><time datetime="2026-07">Jul 2026</time><span>First build: the engine, a local API and a web UI, with a starting panel of agents.</span></li>
-              </ol>
-              <div class="slot">image &middot; a deliberation in progress</div>
+              <figure class="shots" data-at="0">
+                <button class="shots-frame" type="button" aria-label="Screenshot 1 of 5. Click for the next.">
+                  <img class="is-shown" src="media/graphics-engine/shot-1.jpg" width="1109" height="624" alt="A lit scene on a wooden floor under a sky: a metal spring, a rough cube, a torus and a blue sphere, each casting a shadow.">
+                  <img src="media/graphics-engine/shot-2.jpg" width="1131" height="636" alt="Close-up of a normal-mapped diamond-plate spring beside two dark spheres, against a cloudy sky." aria-hidden="true">
+                  <img src="media/graphics-engine/shot-3.jpg" width="1092" height="614" alt="The scene run through the pixelation post-process, captioned with the effect's name." aria-hidden="true">
+                  <img src="media/graphics-engine/shot-4.jpg" width="1104" height="621" alt="The scene run through the posterization post-process, its colours reduced to flat bands, captioned." aria-hidden="true">
+                  <img src="media/graphics-engine/shot-5.jpg" width="1095" height="616" alt="Pixelation and posterization combined on a close view of the torus and the sphere, captioned." aria-hidden="true">
+                </button>
+                <div class="shots-dots">
+                  <button type="button" class="is-on" aria-label="Screenshot 1"></button>
+                  <button type="button" aria-label="Screenshot 2"></button>
+                  <button type="button" aria-label="Screenshot 3"></button>
+                  <button type="button" aria-label="Screenshot 4"></button>
+                  <button type="button" aria-label="Screenshot 5"></button>
+                </div>
+              </figure>
+              <p>Utilized specialized shaders to create effects such as PBR, normal mapping, and shadows.</p>
+              <p>Implemented cameras and movement, realistic lighting, and blur, pixelation, and posterization as post-processing effects.</p>
+              <p><a href="https://github.com/SimonDumas79/IGME-540" class="entry-link" target="_blank" rel="noreferrer">Source code<span class="arrow" aria-hidden="true">&#8599;</span></a></p>
             </template>
           </li>
         </ul>
