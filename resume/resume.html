@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simon Dumas - Resume</title>
+<meta name="robots" content="noindex">
+<!-- Source for Simon-Dumas-Resume.pdf; the words mirror secondbrain/life/career/resume-2026.md.
+     Rebuild with resume/build.sh. The phone number is never committed: build.sh passes it as ?phone=
+     for the copy that gets sent, and the public PDF is built without it. -->
+<style>
+  @page { size: letter; margin: 0.55in 0.6in; }
+  * { box-sizing: border-box; }
+  html { background: #e6e6e6; }
+  body { margin: 0; color: #111; font: 10.5pt/1.38 "Segoe UI", Calibri, Arial, sans-serif; }
+  .page { background: #fff; width: 8.5in; min-height: 11in; margin: 24px auto; padding: 0.55in 0.6in; box-shadow: 0 2px 12px rgba(0, 0, 0, .15); }
+  @media (max-width: 8.5in) { .page { width: auto; min-height: 0; margin: 0; padding: 24px 16px; } }
+  @media print { html { background: none; } .page { width: auto; min-height: 0; margin: 0; padding: 0; box-shadow: none; } }
+  a { color: inherit; text-decoration: none; }
+
+  header { text-align: center; margin-bottom: 12pt; }
+  h1 { font-size: 22pt; font-weight: 600; letter-spacing: .02em; margin: 0 0 3pt; }
+  .contact { color: #444; font-size: 9.5pt; }
+  .contact span + span::before { content: "\00b7"; margin: 0 .55em; color: #888; }
+
+  h2 { font-size: 10pt; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; border-bottom: 1px solid #bbb; padding-bottom: 2pt; margin: 12pt 0 6pt; }
+  p { margin: 0 0 2pt; }
+  .item { margin-bottom: 8pt; break-inside: avoid; }
+  .item:last-child { margin-bottom: 0; }
+  .item-head { display: flex; justify-content: space-between; gap: 1em; }
+  .item-head b { font-weight: 600; }
+  .item-head .meta { color: #444; white-space: nowrap; }
+  ul { margin: 2pt 0 0; padding-left: 1.2em; }
+  li { margin: 1pt 0; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <h1>Simon Dumas</h1>
+  <div class="contact">
+    <span><a href="mailto:simondumas7903@gmail.com">simondumas7903@gmail.com</a></span>
+    <span id="phone" hidden></span>
+  </div>
+  <div class="contact">
+    <span><a href="https://simondumas.dev">simondumas.dev</a></span>
+    <span><a href="https://www.linkedin.com/in/simon-a-dumas">linkedin.com/in/simon-a-dumas</a></span>
+    <span><a href="https://github.com/SimonDumas79">github.com/SimonDumas79</a></span>
+  </div>
+</header>
+
+<section>
+  <p>Game developer with a strong background in gameplay programming and systems design, with a released title on Steam, seeking a game development position.</p>
+</section>
+
+<section>
+  <h2>Skills</h2>
+  <p><b>Languages:</b> C#, C++, HLSL, TypeScript, Python</p>
+  <p><b>Engines &amp; Platforms:</b> Unity, Unreal Engine, DirectX 11, Netcode for GameObjects, Steam, PlayStation</p>
+  <p><b>Tools:</b> Visual Studio, VS Code, GitHub, Trello, Blender, Autodesk Maya, Photoshop</p>
+</section>
+
+<section>
+  <h2>Experience</h2>
+  <div class="item">
+    <div class="item-head"><span><b>Rochester Institute of Technology</b> &ndash; Research Developer</span><span class="meta">January 2025 &ndash; June 2025</span></div>
+    <ul>
+      <li>Worked on a GPU accelerated fluid simulation, focusing on data visualization for a grant presentation.</li>
+      <li>Researched and presented emerging technologies such as digital twins and Nvidia Omniverse for future implementation.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Projects</h2>
+  <div class="item">
+    <div class="item-head"><span><b>ScreenSpace</b> &ndash; Unity, C#</span><span class="meta">Released on Steam, November 2025</span></div>
+    <ul>
+      <li>Designed and developed a territory-based couch co-op shooter in which player health is tied to the player's controlled space.</li>
+      <li>Implemented a dynamic map system that uses Delaunay Triangulation to generate and transfer player territories during runtime.</li>
+      <li>Built CPU opponents that navigate the territory graph across four difficulty levels, along with five ship classes with unique special abilities.</li>
+      <li>Developed online multiplayer with Netcode for GameObjects and Unity Relay, using host-authoritative shot validation and client-side prediction to keep matches fair and responsive.</li>
+      <li>Created all of the game's art, music, and sound.</li>
+    </ul>
+  </div>
+  <div class="item">
+    <div class="item-head"><span><b>Game Graphics Engine</b> &ndash; C++, DirectX 11, HLSL</span><span class="meta"><a href="https://github.com/SimonDumas79/IGME-540">github.com/SimonDumas79/IGME-540</a></span></div>
+    <ul>
+      <li>Built a 3D graphics engine in DirectX 11 and C++ supporting lighting, physically based rendering, normal mapping, shadow mapping, and post-processing.</li>
+      <li>Wrote shaders for PBR, normal mapping, shadows, blur, pixelation, and posterization.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Education</h2>
+  <div class="item">
+    <div class="item-head"><span><b>Rochester Institute of Technology</b> &ndash; Bachelor of Science in Game Design and Development</span><span class="meta">2026</span></div>
+    <p>Relevant coursework: Data Structures &amp; Algorithms I &amp; II, Foundations of Game Graphics Programming, Console Development, Game Design &amp; Development I &amp; II</p>
+  </div>
+</section>
+
+</div>
+<script>
+  const phone = new URLSearchParams(location.search).get('phone');
+  if (phone) {
+    const el = document.getElementById('phone');
+    el.textContent = phone;
+    el.hidden = false;
+  }
+</script>
+</body>
+</html>
