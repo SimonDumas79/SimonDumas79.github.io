@@ -210,20 +210,6 @@ body {
   border-radius: 10px;
   margin: 12px 0;
 }
-.slot, .placeholder {
-  border: 1px dashed rgba(255, 255, 255, 0.22);
-  border-radius: 10px;
-  color: var(--muted);
-  font-size: 0.8rem;
-}
-.slot {
-  aspect-ratio: 16 / 9;
-  display: grid;
-  place-items: center;
-  margin: 4px 0 12px;
-}
-.detail-body p.placeholder { padding: 10px 12px; }
-
 /* Changelog. A detail card is a synopsis then dated milestones, one line per thing built.
    Convention ruled 2026-09-11 and applies to every project added from here on; dates come from
    the commit record or the vault, never from memory. See secondbrain/life/portfolio-site.md.
