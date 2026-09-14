@@ -52,10 +52,8 @@
     <div class="glow" id="panelGlow" aria-hidden="true"></div>
     <div class="surface-scroll" id="panel" tabindex="0">
 
-      <!-- COPY STATUS: About is final, in Simon's words (2026-09-10). Everything below it is still
-           placeholder, lifted verbatim from resume-2026.md or the portfolio spec so the layout could be judged.
-           Each entry's <template class="detail-src"> holds what the detail card shows when the entry is clicked;
-           .slot boxes mark where an image or video goes. -->
+      <!-- Each entry's <template class="detail-src"> holds what the detail card shows when the entry is clicked.
+           Keep media inside the templates: template contents stay inert, so nothing loads until a card opens. -->
 
       <section id="about" class="section">
         <h3>About</h3>
@@ -93,8 +91,7 @@
               </figure>
               <p>The map is split into triangles once, and each triangle remembers its neighbours. A hit then just hands one triangle to the player who landed it.</p>
               <ol class="log">
-                <li class="is-pending"><time datetime="2026-09">Sep 2026</time><span>1.1, in testing. Everything below, in one update.</span></li>
-                <li><time datetime="2026-07">Jul 2026</time><span>Level editor. Authoring maps in game, with multi-select, polygon tools and undo.</span></li>
+                <li><time datetime="2026-09">Sep 2026</time><span>1.1 released, bringing online play and CPU opponents.</span></li>
                 <li><time datetime="2026-06">Jun 2026</time><span>Online play is host authoritative, using client prediction to make it feel smooth.</span></li>
                 <li><time datetime="2026-06">Jun 2026</time><span>CPU opponents. They path through the territory graph across four difficulty tiers, with separate combat behaviour per ship.</span></li>
                 <li><time datetime="2025-11">Nov 2025</time><span>Released on Steam.</span></li>
@@ -105,24 +102,8 @@
               <p><a href="https://store.steampowered.com/app/4101820/Screen_Space/" class="entry-link" target="_blank" rel="noreferrer">Steam page<span class="arrow" aria-hidden="true">&#8599;</span></a></p>
             </template>
           </li>
-          <li class="entry" tabindex="0">
-            <div class="entry-aside"><span class="when">Ongoing</span></div>
-            <div class="entry-body">
-              <h4>Cue The Chaos</h4>
-              <p class="premise">You are the cue ball on a pool table. Get pocketed and you lose.</p>
-              <p>I worked on the core game loop, the AI for the enemies, and the upgrade system.</p>
-              <ul class="tags"><li>Unity</li><li>C#</li><li>Board Bound Games</li></ul>
-            </div>
-            <template class="detail-src">
-              <!-- Changelog pending: Cue The Chaos lives in the BoardBoundGames repo, which is on the
-                   workhorse PC, so its milestone dates are not available here. See the workhorse job
-                   list in secondbrain/life/portfolio-site.md. -->
-              <div class="slot">screenshot &middot; the table</div>
-              <p>The upgrade system lets you buy items between rounds.</p>
-              <p>Each ball uses a different AI, each stronger than the last.</p>
-              <div class="slot">video &middot; a round</div>
-            </template>
-          </li>
+          <!-- Cue The Chaos is off the site until it has media, at Simon's request (2026-09-14). Its entry,
+               premise line included, is intact in git history at ff48873. -->
           <!-- Game Graphics Engine replaced Collective, at Simon's request (2026-09-13). Collective's entry,
                with its changelog, is intact in git history at 574e97b. Undated like the other additions;
                copy is from his previous portfolio, screenshots from the same repo. -->
