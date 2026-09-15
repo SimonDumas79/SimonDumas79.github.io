@@ -1,4 +1,4 @@
-/* Palette: ScreenSpace ground + player-1 blue, white text, flat panel.
+/* Palette: Screen Space ground + player-1 blue, white text, flat panel.
    The panel is a solid fill rather than frosted glass: the reference this layout came from blurs
    nothing, and a backdrop-filter here cost half the frame rate. The panel sits at the ground colour
    and lights up around the cursor, alongside the mesh behind the page doing the same to its

@@ -1,4 +1,4 @@
-// Backdrop: a faint Delaunay mesh (ScreenSpace's territory look) whose edges glow near the cursor.
+// Backdrop: a faint Delaunay mesh (Screen Space's territory look) whose edges glow near the cursor.
 // Each edge carries its own glow level that eases toward a target set by cursor distance, so light
 // trails the cursor and fades out instead of switching off.
 (() => {
