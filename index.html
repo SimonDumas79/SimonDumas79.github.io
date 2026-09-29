@@ -140,10 +140,11 @@
               <p>The free level is a marker trained on transcripts labelled by the SponsorBlock community: seven small detectors over sentence embeddings, then a second stage that decides where each read starts and where the show resumes. It is tuned by channel-grouped cross-validation and graded once per held-out set on the share of ad time actually skipped, next to the seconds of show lost per video.</p>
               <p>Everything above the free level is optional because it costs the user something: the GPU's time, or their AI plan. The program talks to any AI through a small adapter, answers only the extension, and never sends the video anywhere but YouTube and SponsorBlock.</p>
               <ol class="log">
-                <li><time datetime="2026-09">Sep 2026</time><span>Public. Security review before release: Host and origin checks on the program, a reading queue, safe model loading, and offline tests of who it answers.</span></li>
-                <li><time datetime="2026-09">Sep 2026</time><span>Any-AI adapter: Claude Code, Codex, Gemini, Ollama or an OpenAI-compatible API, picked in the popup.</span></li>
-                <li><time datetime="2026-09">Sep 2026</time><span>Free level measured on a fifth held-out set: 63% of sponsor time skipped at under 5 s of show lost per video, without a language model.</span></li>
-                <li><time datetime="2026-09">Sep 2026</time><span>Built: the extension, the program, and the marker pipeline from SponsorBlock sampling to a shipped model release.</span></li>
+                <li><time datetime="2026-09-29">29 Sep 2026</time><span>Public. Security review before release: Host and origin checks on the program, a reading queue, safe model loading, and offline tests of who it answers.</span></li>
+                <li><time datetime="2026-09-24">24 Sep 2026</time><span>Any-AI adapter: Claude Code, Codex, Gemini, Ollama or an OpenAI-compatible API, picked in the popup. Level-1 models published as a release the program fetches and checks by hash.</span></li>
+                <li><time datetime="2026-09-23">23 Sep 2026</time><span>Free level graded once on a fifth held-out set: 63% of sponsor time skipped at under 5 s of show lost per video, without a language model. Four reading levels in the popup.</span></li>
+                <li><time datetime="2026-09-20">20 Sep 2026</time><span>Marker pipeline: SponsorBlock sampling, caption crawl, labelling, features and training. Hand-written cue rules found 63% of reads on a low-review holdout, which is why a trained model was needed.</span></li>
+                <li><time datetime="2026-09-18">18 Sep 2026</time><span>First version: the extension, the local program, and a full transcript read by Claude, with a review card for submitting finds back to SponsorBlock.</span></li>
               </ol>
               <p><a href="https://github.com/SimonDumas79/SponsorSkip" class="entry-link" target="_blank" rel="noreferrer">Source code<span class="arrow" aria-hidden="true">&#8599;</span></a></p>
             </template>
