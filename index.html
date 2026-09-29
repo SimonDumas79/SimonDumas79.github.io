@@ -116,6 +116,38 @@
               <p><a href="https://youtu.be/EsfPe9a71ao" class="entry-link" target="_blank" rel="noreferrer">Watch on YouTube<span class="arrow" aria-hidden="true">&#8599;</span></a></p>
             </template>
           </li>
+          <!-- SponsorSkip added 2026-09-29, the day the repo went public. Kept serious at Simon's request: the
+               README's "Do you hate advertisements?" line stays off the site. Screenshots: media/sponsorskip/. -->
+          <li class="entry" tabindex="0">
+            <div class="entry-aside"><span class="when">2026</span></div>
+            <div class="entry-body">
+              <h4><a href="https://github.com/SimonDumas79/SponsorSkip" class="entry-link" target="_blank" rel="noreferrer">SponsorSkip<span class="arrow" aria-hidden="true">&#8599;</span></a></h4>
+              <p class="premise">Sponsor reads, found and skipped from the transcript.</p>
+              <p>Designed and built a Chrome and Firefox extension, backed by a local program, that reads each YouTube video's transcript and skips its sponsor segments. The default reader is an ensemble of seven small models trained on community-labelled transcripts, running on the CPU with no data leaving the machine. Higher levels are opt-in and route the transcript to the user's own AI through a provider-neutral adapter.</p>
+              <ul class="tags"><li>Python</li><li>PyTorch</li><li>JavaScript</li><li>Node.js</li></ul>
+            </div>
+            <template class="detail-src">
+              <figure class="shots" data-at="0">
+                <button class="shots-frame" type="button" aria-label="Screenshot 1 of 2. Click for the next.">
+                  <img class="is-shown" src="media/sponsorskip/shot-1.jpg" width="1280" height="720" alt="A YouTube player at 9:10 of 24:33, just past a skipped sponsor read. SponsorSkip's status line reads Skipped sponsor 7:34 to 9:09, with an Undo button.">
+                  <img src="media/sponsorskip/shot-2.jpg" width="1280" height="720" alt="The extension's popup open over a YouTube video: connected, the reading in progress step by step, and the three reader levels with the free marker selected as default." aria-hidden="true">
+                </button>
+                <div class="shots-dots">
+                  <button type="button" class="is-on" aria-label="Screenshot 1"></button>
+                  <button type="button" aria-label="Screenshot 2"></button>
+                </div>
+              </figure>
+              <p>The free level is a marker trained on transcripts labelled by the SponsorBlock community: seven small detectors over sentence embeddings, then a second stage that decides where each read starts and where the show resumes. It is tuned by channel-grouped cross-validation and graded once per held-out set on the share of ad time actually skipped, next to the seconds of show lost per video.</p>
+              <p>Everything above the free level is optional because it costs the user something: the GPU's time, or their AI plan. The program talks to any AI through a small adapter, answers only the extension, and never sends the video anywhere but YouTube and SponsorBlock.</p>
+              <ol class="log">
+                <li><time datetime="2026-09">Sep 2026</time><span>Public. Security review before release: Host and origin checks on the program, a reading queue, safe model loading, and offline tests of who it answers.</span></li>
+                <li><time datetime="2026-09">Sep 2026</time><span>Any-AI adapter: Claude Code, Codex, Gemini, Ollama or an OpenAI-compatible API, picked in the popup.</span></li>
+                <li><time datetime="2026-09">Sep 2026</time><span>Free level measured on a fifth held-out set: 63% of sponsor time skipped at under 5 s of show lost per video, without a language model.</span></li>
+                <li><time datetime="2026-09">Sep 2026</time><span>Built: the extension, the program, and the marker pipeline from SponsorBlock sampling to a shipped model release.</span></li>
+              </ol>
+              <p><a href="https://github.com/SimonDumas79/SponsorSkip" class="entry-link" target="_blank" rel="noreferrer">Source code<span class="arrow" aria-hidden="true">&#8599;</span></a></p>
+            </template>
+          </li>
           <!-- Cue The Chaos is off the site until it has media, at Simon's request (2026-09-14). Its entry,
                premise line included, is intact in git history at ff48873. -->
           <!-- Game Graphics Engine replaced Collective, at Simon's request (2026-09-13). Collective's entry,
